@@ -16,7 +16,7 @@ gdjs.Splash_32ScreenCode.condition0IsTrue_0.val = false;
 {
 gdjs.Splash_32ScreenCode.condition0IsTrue_0.val = gdjs.evtTools.input.isMouseButtonPressed(runtimeScene, "Left");
 }if (gdjs.Splash_32ScreenCode.condition0IsTrue_0.val) {
-{gdjs.evtTools.runtimeScene.replaceScene(runtimeScene, "Game Scene", false);
+{gdjs.evtTools.runtimeScene.replaceScene(runtimeScene, "Level1", false);
 }}
 
 }
