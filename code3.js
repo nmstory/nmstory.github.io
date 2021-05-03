@@ -250,7 +250,7 @@ gdjs.Level1Code.GDEnemyObjects1.length = k;}if (gdjs.Level1Code.condition0IsTrue
     gdjs.Level1Code.GDEnemyObjects1[i].addForceTowardObject((gdjs.Level1Code.GDPlayerObjects1.length !== 0 ? gdjs.Level1Code.GDPlayerObjects1[0] : null), 60, 0);
 }
 }{for(var i = 0, len = gdjs.Level1Code.GDEnemyObjects1.length ;i < len;++i) {
-    gdjs.Level1Code.GDEnemyObjects1[i].rotateTowardPosition((( gdjs.Level1Code.GDPlayerObjects1.length === 0 ) ? 0 :gdjs.Level1Code.GDPlayerObjects1[0].getPointX("Center")), (( gdjs.Level1Code.GDPlayerObjects1.length === 0 ) ? 0 :gdjs.Level1Code.GDPlayerObjects1[0].getPointX("Center")), 80, runtimeScene);
+    gdjs.Level1Code.GDEnemyObjects1[i].rotateTowardPosition((( gdjs.Level1Code.GDPlayerObjects1.length === 0 ) ? 0 :gdjs.Level1Code.GDPlayerObjects1[0].getPointX("Center")), (( gdjs.Level1Code.GDPlayerObjects1.length === 0 ) ? 0 :gdjs.Level1Code.GDPlayerObjects1[0].getPointY("Center")), 80, runtimeScene);
 }
 }}
 
