@@ -13,6 +13,8 @@ var gdjs;
       this._rightKey = false;
       this._upKey = false;
       this._downKey = false;
+      this._stickAngle = 0;
+      this._stickForce = 0;
       this._temporaryPointForTransformations = [0, 0];
       this._allowDiagonals = behaviorData.allowDiagonals;
       this._acceleration = behaviorData.acceleration;
@@ -23,6 +25,7 @@ var gdjs;
       this._angleOffset = behaviorData.angleOffset;
       this._ignoreDefaultControls = behaviorData.ignoreDefaultControls;
       this.setViewpoint(behaviorData.viewpoint, behaviorData.customIsometryAngle);
+      this._movementAngleOffset = behaviorData.movementAngleOffset || 0;
     }
     updateFromBehaviorData(oldBehaviorData, newBehaviorData) {
       if (oldBehaviorData.allowDiagonals !== newBehaviorData.allowDiagonals) {
@@ -52,15 +55,18 @@ var gdjs;
       if (oldBehaviorData.platformType !== newBehaviorData.platformType || oldBehaviorData.customIsometryAngle !== newBehaviorData.customIsometryAngle) {
         this.setViewpoint(newBehaviorData.platformType, newBehaviorData.customIsometryAngle);
       }
+      if (oldBehaviorData.movementAngleOffset !== newBehaviorData.movementAngleOffset) {
+        this._movementAngleOffset = newBehaviorData.movementAngleOffset;
+      }
       return true;
     }
     setViewpoint(viewpoint, customIsometryAngle) {
-      if (viewpoint == "PixelIsometry") {
-        this._basisTransformation = new IsometryTransformation(Math.atan(0.5));
-      } else if (viewpoint == "TrueIsometry") {
-        this._basisTransformation = new IsometryTransformation(Math.PI / 6);
-      } else if (viewpoint == "CustomIsometry") {
-        this._basisTransformation = new IsometryTransformation(customIsometryAngle * Math.PI / 180);
+      if (viewpoint === "PixelIsometry") {
+        this._basisTransformation = new gdjs2.TopDownMovementRuntimeBehavior.IsometryTransformation(Math.atan(0.5));
+      } else if (viewpoint === "TrueIsometry") {
+        this._basisTransformation = new gdjs2.TopDownMovementRuntimeBehavior.IsometryTransformation(Math.PI / 6);
+      } else if (viewpoint === "CustomIsometry") {
+        this._basisTransformation = new gdjs2.TopDownMovementRuntimeBehavior.IsometryTransformation(customIsometryAngle * Math.PI / 180);
       } else {
         this._basisTransformation = null;
       }
@@ -122,20 +128,22 @@ var gdjs;
     getAngle() {
       return this._angle;
     }
+    setMovementAngleOffset(movementAngleOffset) {
+      this._movementAngleOffset = movementAngleOffset;
+    }
+    getMovementAngleOffset() {
+      return this._movementAngleOffset;
+    }
     doStepPreEvents(runtimeScene) {
       const LEFTKEY = 37;
       const UPKEY = 38;
       const RIGHTKEY = 39;
       const DOWNKEY = 40;
-      const object = this.owner;
-      const timeDelta = this.owner.getElapsedTime(runtimeScene) / 1e3;
       this._leftKey |= !this._ignoreDefaultControls && runtimeScene.getGame().getInputManager().isKeyPressed(LEFTKEY);
       this._rightKey |= !this._ignoreDefaultControls && runtimeScene.getGame().getInputManager().isKeyPressed(RIGHTKEY);
       this._downKey |= !this._ignoreDefaultControls && runtimeScene.getGame().getInputManager().isKeyPressed(DOWNKEY);
       this._upKey |= !this._ignoreDefaultControls && runtimeScene.getGame().getInputManager().isKeyPressed(UPKEY);
       let direction = -1;
-      let directionInRad = 0;
-      let directionInDeg = 0;
       if (!this._allowDiagonals) {
         if (this._upKey && !this._downKey) {
           direction = 6;
@@ -186,11 +194,22 @@ var gdjs;
           }
         }
       }
-      if (direction != -1) {
-        directionInRad = direction * Math.PI / 4;
-        directionInDeg = direction * 45;
+      const object = this.owner;
+      const timeDelta = this.owner.getElapsedTime(runtimeScene) / 1e3;
+      let directionInRad = 0;
+      let directionInDeg = 0;
+      if (direction !== -1) {
+        directionInRad = (direction + this._movementAngleOffset / 45) * Math.PI / 4;
+        directionInDeg = direction * 45 + this._movementAngleOffset;
         this._xVelocity += this._acceleration * timeDelta * Math.cos(directionInRad);
         this._yVelocity += this._acceleration * timeDelta * Math.sin(directionInRad);
+      } else if (this._stickForce !== 0) {
+        directionInDeg = this._stickAngle + this._movementAngleOffset;
+        directionInRad = directionInDeg * Math.PI / 180;
+        const norm = this._acceleration * timeDelta * this._stickForce;
+        this._xVelocity += norm * Math.cos(directionInRad);
+        this._yVelocity += norm * Math.sin(directionInRad);
+        this._stickForce = 0;
       } else {
         directionInRad = Math.atan2(this._yVelocity, this._xVelocity);
         directionInDeg = Math.atan2(this._yVelocity, this._xVelocity) * 180 / Math.PI;
@@ -211,7 +230,7 @@ var gdjs;
         this._yVelocity = this._maxSpeed * Math.sin(directionInRad);
       }
       this._angularSpeed = this._angularMaxSpeed;
-      if (this._basisTransformation == null) {
+      if (this._basisTransformation === null) {
         object.setX(object.getX() + this._xVelocity * timeDelta);
         object.setY(object.getY() + this._yVelocity * timeDelta);
       } else {
@@ -259,33 +278,35 @@ var gdjs;
     simulateDownKey() {
       this._downKey = true;
     }
+    simulateStick(stickAngle, stickForce) {
+      this._stickAngle = stickAngle % 360;
+      this._stickForce = Math.max(0, Math.min(1, stickForce));
+    }
   }
-  TopDownMovementRuntimeBehavior.TOP_DOWN = 0;
-  TopDownMovementRuntimeBehavior.PIXEL_ISOMETRY = 1;
-  TopDownMovementRuntimeBehavior.TRUE_ISOMETRY = 2;
-  TopDownMovementRuntimeBehavior.CUSTOM_ISOMETRY = 2;
   gdjs2.TopDownMovementRuntimeBehavior = TopDownMovementRuntimeBehavior;
-  class IsometryTransformation {
-    constructor(angle) {
-      if (angle <= 0 || angle >= Math.PI / 4)
-        throw new RangeError("An isometry angle must be in ]0; pi/4] but was: " + angle);
-      const alpha = Math.asin(Math.tan(angle));
-      const sinA = Math.sin(alpha);
-      const cosB = Math.cos(Math.PI / 4);
-      const sinB = cosB;
-      this._screen = [
-        [cosB, -sinB],
-        [sinA * sinB, sinA * cosB]
-      ];
+  (function(TopDownMovementRuntimeBehavior2) {
+    class IsometryTransformation {
+      constructor(angle) {
+        if (angle <= 0 || angle >= Math.PI / 4)
+          throw new RangeError("An isometry angle must be in ]0; pi/4] but was: " + angle);
+        const alpha = Math.asin(Math.tan(angle));
+        const sinA = Math.sin(alpha);
+        const cosB = Math.cos(Math.PI / 4);
+        const sinB = cosB;
+        this._screen = [
+          [cosB, -sinB],
+          [sinA * sinB, sinA * cosB]
+        ];
+      }
+      toScreen(worldPoint, screenPoint) {
+        const x = this._screen[0][0] * worldPoint[0] + this._screen[0][1] * worldPoint[1];
+        const y = this._screen[1][0] * worldPoint[0] + this._screen[1][1] * worldPoint[1];
+        screenPoint[0] = x;
+        screenPoint[1] = y;
+      }
     }
-    toScreen(worldPoint, screenPoint) {
-      const x = this._screen[0][0] * worldPoint[0] + this._screen[0][1] * worldPoint[1];
-      const y = this._screen[1][0] * worldPoint[0] + this._screen[1][1] * worldPoint[1];
-      screenPoint[0] = x;
-      screenPoint[1] = y;
-    }
-  }
-  gdjs2.IsometryTransformation = IsometryTransformation;
+    TopDownMovementRuntimeBehavior2.IsometryTransformation = IsometryTransformation;
+  })(TopDownMovementRuntimeBehavior = gdjs2.TopDownMovementRuntimeBehavior || (gdjs2.TopDownMovementRuntimeBehavior = {}));
   gdjs2.registerBehavior("TopDownMovementBehavior::TopDownMovementBehavior", gdjs2.TopDownMovementRuntimeBehavior);
 })(gdjs || (gdjs = {}));
 //# sourceMappingURL=topdownmovementruntimebehavior.js.map
