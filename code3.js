@@ -657,7 +657,7 @@ gdjs.copyArray(runtimeScene.getObjects("healthbar"), gdjs.Level1Code.GDhealthbar
     gdjs.Level1Code.GDScoreTextObjects1[i].setBBText("[size=30]Level 1" + gdjs.evtTools.string.newLine() + "[b]Score: [/b]" + gdjs.evtTools.common.getVariableString(runtimeScene.getGame().getVariables().getFromIndex(0)) + "[/size]");
 }
 }{for(var i = 0, len = gdjs.Level1Code.GDhealthbarObjects1.length ;i < len;++i) {
-    gdjs.Level1Code.GDhealthbarObjects1[i].setScaleX((gdjs.RuntimeObject.getVariableNumber(((gdjs.Level1Code.GDPlayerObjects1.length === 0 ) ? gdjs.VariablesContainer.badVariablesContainer : gdjs.Level1Code.GDPlayerObjects1[0].getVariables()).getFromIndex(1))) / (gdjs.evtTools.window.getWindowInnerWidth() / 30));
+    gdjs.Level1Code.GDhealthbarObjects1[i].setScaleX((gdjs.RuntimeObject.getVariableNumber(((gdjs.Level1Code.GDPlayerObjects1.length === 0 ) ? gdjs.VariablesContainer.badVariablesContainer : gdjs.Level1Code.GDPlayerObjects1[0].getVariables()).getFromIndex(1))) / 60);
 }
 }}
 
@@ -1273,7 +1273,7 @@ gdjs.copyArray(runtimeScene.getObjects("healthbar"), gdjs.Level1Code.GDhealthbar
     gdjs.Level1Code.GDScoreTextObjects1[i].setBBText("[size=30]Level 1" + gdjs.evtTools.string.newLine() + "[b]Score: [/b]" + gdjs.evtTools.common.getVariableString(runtimeScene.getGame().getVariables().getFromIndex(0)) + "[/size]");
 }
 }{for(var i = 0, len = gdjs.Level1Code.GDhealthbarObjects1.length ;i < len;++i) {
-    gdjs.Level1Code.GDhealthbarObjects1[i].setScaleX((gdjs.RuntimeObject.getVariableNumber(((gdjs.Level1Code.GDPlayerObjects1.length === 0 ) ? gdjs.VariablesContainer.badVariablesContainer : gdjs.Level1Code.GDPlayerObjects1[0].getVariables()).getFromIndex(1))) / (gdjs.evtTools.window.getWindowInnerWidth() / 30));
+    gdjs.Level1Code.GDhealthbarObjects1[i].setScaleX((gdjs.RuntimeObject.getVariableNumber(((gdjs.Level1Code.GDPlayerObjects1.length === 0 ) ? gdjs.VariablesContainer.badVariablesContainer : gdjs.Level1Code.GDPlayerObjects1[0].getVariables()).getFromIndex(1))) / 60);
 }
 }}
 
