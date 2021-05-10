@@ -526,7 +526,7 @@ gdjs.copyArray(runtimeScene.getObjects("Enemy"), gdjs.Level2Code.GDEnemyObjects1
 gdjs.Level2Code.condition0IsTrue_0.val = false;
 {
 for(var i = 0, k = 0, l = gdjs.Level2Code.GDEnemyObjects1.length;i<l;++i) {
-    if ( gdjs.Level2Code.GDEnemyObjects1[i].getVariableString(gdjs.Level2Code.GDEnemyObjects1[i].getVariables().getFromIndex(1)) == "false" ) {
+    if ( gdjs.Level2Code.GDEnemyObjects1[i].getVariableString(gdjs.Level2Code.GDEnemyObjects1[i].getVariables().getFromIndex(1)) == "true" ) {
         gdjs.Level2Code.condition0IsTrue_0.val = true;
         gdjs.Level2Code.GDEnemyObjects1[k] = gdjs.Level2Code.GDEnemyObjects1[i];
         ++k;
@@ -535,7 +535,7 @@ for(var i = 0, k = 0, l = gdjs.Level2Code.GDEnemyObjects1.length;i<l;++i) {
 gdjs.Level2Code.GDEnemyObjects1.length = k;}if (gdjs.Level2Code.condition0IsTrue_0.val) {
 /* Reuse gdjs.Level2Code.GDEnemyObjects1 */
 {for(var i = 0, len = gdjs.Level2Code.GDEnemyObjects1.length ;i < len;++i) {
-    gdjs.Level2Code.GDEnemyObjects1[i].returnVariable(gdjs.Level2Code.GDEnemyObjects1[i].getVariables().getFromIndex(1)).setString("true");
+    gdjs.Level2Code.GDEnemyObjects1[i].returnVariable(gdjs.Level2Code.GDEnemyObjects1[i].getVariables().getFromIndex(1)).setString("false");
 }
 }{gdjs.evtTools.runtimeScene.resetTimer(runtimeScene, "freeze-timer");
 }}
