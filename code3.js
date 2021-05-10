@@ -526,7 +526,7 @@ gdjs.copyArray(runtimeScene.getObjects("Enemy"), gdjs.Level1Code.GDEnemyObjects1
 gdjs.Level1Code.condition0IsTrue_0.val = false;
 {
 for(var i = 0, k = 0, l = gdjs.Level1Code.GDEnemyObjects1.length;i<l;++i) {
-    if ( gdjs.Level1Code.GDEnemyObjects1[i].getVariableString(gdjs.Level1Code.GDEnemyObjects1[i].getVariables().getFromIndex(1)) == "false" ) {
+    if ( gdjs.Level1Code.GDEnemyObjects1[i].getVariableString(gdjs.Level1Code.GDEnemyObjects1[i].getVariables().getFromIndex(1)) == "true" ) {
         gdjs.Level1Code.condition0IsTrue_0.val = true;
         gdjs.Level1Code.GDEnemyObjects1[k] = gdjs.Level1Code.GDEnemyObjects1[i];
         ++k;
@@ -535,7 +535,7 @@ for(var i = 0, k = 0, l = gdjs.Level1Code.GDEnemyObjects1.length;i<l;++i) {
 gdjs.Level1Code.GDEnemyObjects1.length = k;}if (gdjs.Level1Code.condition0IsTrue_0.val) {
 /* Reuse gdjs.Level1Code.GDEnemyObjects1 */
 {for(var i = 0, len = gdjs.Level1Code.GDEnemyObjects1.length ;i < len;++i) {
-    gdjs.Level1Code.GDEnemyObjects1[i].returnVariable(gdjs.Level1Code.GDEnemyObjects1[i].getVariables().getFromIndex(1)).setString("true");
+    gdjs.Level1Code.GDEnemyObjects1[i].returnVariable(gdjs.Level1Code.GDEnemyObjects1[i].getVariables().getFromIndex(1)).setString("false");
 }
 }{gdjs.evtTools.runtimeScene.resetTimer(runtimeScene, "freeze-timer");
 }}
@@ -747,7 +747,7 @@ gdjs.Level1Code.GDPlayerObjects1.length = k;}}
 if (gdjs.Level1Code.condition1IsTrue_0.val) {
 /* Reuse gdjs.Level1Code.GDPlayerObjects1 */
 {for(var i = 0, len = gdjs.Level1Code.GDPlayerObjects1.length ;i < len;++i) {
-    gdjs.Level1Code.GDPlayerObjects1[i].addForceTowardPosition(gdjs.evtTools.input.getMouseX(runtimeScene, "", 0), gdjs.evtTools.input.getMouseY(runtimeScene, "", 0), 190, 0);
+    gdjs.Level1Code.GDPlayerObjects1[i].addForceTowardPosition(gdjs.evtTools.input.getMouseX(runtimeScene, "", 0), gdjs.evtTools.input.getMouseY(runtimeScene, "", 0), 200, 0);
 }
 }}
 
