@@ -339,7 +339,7 @@ gdjs.Level1Code.GDPlayerObjects1.length = k;}if (gdjs.Level1Code.condition0IsTru
 {for(var i = 0, len = gdjs.Level1Code.GDPlayerObjects1.length ;i < len;++i) {
     gdjs.Level1Code.GDPlayerObjects1[i].returnVariable(gdjs.Level1Code.GDPlayerObjects1[i].getVariables().getFromIndex(3)).setString("false");
 }
-}{}{}{gdjs.evtTools.sound.setSoundOnChannelVolume(runtimeScene, 0, 0);
+}{gdjs.evtTools.sound.setSoundOnChannelVolume(runtimeScene, 0, 0);
 }{gdjs.evtTools.runtimeScene.resetTimer(runtimeScene, "sound-timer");
 }}
 
@@ -366,7 +366,7 @@ gdjs.Level1Code.GDPlayerObjects1.length = k;}if (gdjs.Level1Code.condition0IsTru
 {for(var i = 0, len = gdjs.Level1Code.GDPlayerObjects1.length ;i < len;++i) {
     gdjs.Level1Code.GDPlayerObjects1[i].returnVariable(gdjs.Level1Code.GDPlayerObjects1[i].getVariables().getFromIndex(3)).setString("true");
 }
-}{}{}{gdjs.evtTools.sound.setSoundOnChannelVolume(runtimeScene, 0, 40);
+}{gdjs.evtTools.sound.setSoundOnChannelVolume(runtimeScene, 0, 40);
 }{gdjs.evtTools.runtimeScene.resetTimer(runtimeScene, "sound-timer");
 }}
 
@@ -719,7 +719,7 @@ gdjs.Level1Code.eventsList1(runtimeScene);} //End of subevents
 {
 gdjs.copyArray(runtimeScene.getObjects("Player"), gdjs.Level1Code.GDPlayerObjects1);
 {for(var i = 0, len = gdjs.Level1Code.GDPlayerObjects1.length ;i < len;++i) {
-    gdjs.Level1Code.GDPlayerObjects1[i].rotateTowardPosition(gdjs.evtTools.input.getMouseX(runtimeScene, "", 0), gdjs.evtTools.input.getMouseY(runtimeScene, "", 0), 80, runtimeScene);
+    gdjs.Level1Code.GDPlayerObjects1[i].rotateTowardPosition(gdjs.evtTools.input.getMouseX(runtimeScene, "", 0), gdjs.evtTools.input.getMouseY(runtimeScene, "", 0), 100, runtimeScene);
 }
 }}
 
@@ -776,22 +776,6 @@ if (gdjs.Level1Code.condition1IsTrue_0.val) {
 /* Reuse gdjs.Level1Code.GDPlayerObjects1 */
 {for(var i = 0, len = gdjs.Level1Code.GDPlayerObjects1.length ;i < len;++i) {
     gdjs.Level1Code.GDPlayerObjects1[i].addForceTowardPosition(gdjs.evtTools.input.getMouseX(runtimeScene, "", 0), gdjs.evtTools.input.getMouseY(runtimeScene, "", 0), 125, 0);
-}
-}}
-
-}
-
-
-{
-
-
-gdjs.Level1Code.condition0IsTrue_0.val = false;
-{
-gdjs.Level1Code.condition0IsTrue_0.val = gdjs.evtTools.input.isKeyPressed(runtimeScene, "s");
-}if (gdjs.Level1Code.condition0IsTrue_0.val) {
-gdjs.copyArray(runtimeScene.getObjects("Player"), gdjs.Level1Code.GDPlayerObjects1);
-{for(var i = 0, len = gdjs.Level1Code.GDPlayerObjects1.length ;i < len;++i) {
-    gdjs.Level1Code.GDPlayerObjects1[i].addForceTowardPosition(gdjs.evtTools.input.getMouseX(runtimeScene, "", 0), gdjs.evtTools.input.getMouseY(runtimeScene, "", 0), -(70), 0);
 }
 }}
 
